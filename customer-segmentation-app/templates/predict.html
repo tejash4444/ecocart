@@ -1,0 +1,238 @@
+{% extends "layout.html" %} {% block title %}Predict Persona | EcoCart{%
+endblock %} {% block content %}
+<section class="section" id="prediction-section">
+  <h2 class="section-title">Predict Customer Persona</h2>
+  <p
+    style="
+      max-width: 700px;
+      margin: -1rem auto 3rem;
+      text-align: center;
+      color: var(--text-muted);
+    "
+  >
+    Use our trained model to predict the persona group for prospective
+    customers. This enables tailored outreach to maximize impact in new regions.
+  </p>
+
+  <div class="prediction-container">
+    <!-- Input Form -->
+    <div class="prediction-form-wrapper animate-on-scroll">
+      <form id="prediction-form">
+        <div class="form-grid">
+          <!-- Sex -->
+          <div class="form-group">
+            <label for="sex">Gender</label>
+            <select id="sex" name="Sex">
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+          <!-- Bachelor -->
+          <div class="form-group">
+            <label for="bachelor">Marital Status</label>
+            <select id="bachelor" name="Bachelor">
+              <option value="No">Single</option>
+              <option value="Yes">Married</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Age -->
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" name="Age" id="age" value="35" required />
+        </div>
+
+        <!-- Graduated -->
+        <div class="form-group">
+          <label for="graduated">Graduated</label>
+          <select id="graduated" name="Graduated">
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </div>
+
+        <!-- Career -->
+        <div class="form-group">
+          <label for="career">Career</label>
+          <select id="career" name="Career">
+            <option>Scientist</option>
+            <option>Fashion Designer</option>
+            <option>Doctor</option>
+            <option>Lawyer</option>
+            <option>Content Creation</option>
+            <option>HR</option>
+            <option>Singer</option>
+            <option>Engineer</option>
+            <option>Homemaker</option>
+          </select>
+        </div>
+
+        <!-- Work Experience -->
+        <div class="form-group">
+          <label for="work-experience">Work Experience (Years)</label>
+          <input
+            type="number"
+            name="Work Experience"
+            id="work-experience"
+            value="2"
+            required
+          />
+        </div>
+
+        <div class="form-grid">
+          <!-- Family Expenses -->
+          <div class="form-group">
+            <label for="family-expenses">Family Expenses</label>
+            <select id="family-expenses" name="Family Expenses">
+              <option>Low</option>
+              <option>Average</option>
+              <option>High</option>
+            </select>
+          </div>
+          <!-- Family Size -->
+          <div class="form-group">
+            <label for="family-size">Family Size</label>
+            <input
+              type="number"
+              name="Family  Size"
+              id="family-size"
+              value="3"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Variable -->
+        <div class="form-group">
+          <label for="variable">Variable</label>
+          <select id="variable" name="Variable">
+            <option>Dog_1</option>
+            <option>Dog_2</option>
+            <option>Dog_3</option>
+            <option>Dog_4</option>
+            <option>Dog_5</option>
+            <option>Dog_6</option>
+            <option>Dog_7</option>
+          </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn" id="submit-button">
+          <span id="button-text">Predict Persona</span>
+          <i id="loading-spinner" class="fas fa-spinner fa-spin hidden"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Result Display -->
+    <div class="prediction-result-wrapper">
+      <div id="result-card" class="card result-card-hidden">
+        <h3 id="result-title">Prediction Result</h3>
+        <div id="prediction-icon" class="result-icon"></div>
+        <p id="prediction-result" class="result-text"></p>
+        <p id="prediction-description" class="result-description"></p>
+        <div id="error-message" class="error-text"></div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block scripts %}
+<script>
+  // This block adds page-specific JavaScript that will run after the main script.js
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("prediction-form");
+    if (form) {
+      const submitButton = document.getElementById("submit-button");
+      const buttonText = document.getElementById("button-text");
+      const loadingSpinner = document.getElementById("loading-spinner");
+
+      const resultCard = document.getElementById("result-card");
+      const predictionResult = document.getElementById("prediction-result");
+      const predictionIcon = document.getElementById("prediction-icon");
+      const predictionDescription = document.getElementById(
+        "prediction-description"
+      );
+      const errorMessage = document.getElementById("error-message");
+
+      const personaDetails = {
+        Akshat: {
+          icon: "💼",
+          description:
+            "Tech-savvy youth responsive to app-based offers and social media campaigns.",
+        },
+        Bhavesh: {
+          icon: "💰",
+          description:
+            "Price-sensitive shopper who seeks discounts and cashback opportunities.",
+        },
+        Chaitanya: {
+          icon: "🌿",
+          description:
+            "Environmentally conscious buyers supporting sustainable and green brands.",
+        },
+        Darsh: {
+          icon: "💎",
+          description:
+            "Premium urban buyer preferring exclusive experiences and luxury products.",
+        },
+      };
+
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        buttonText.textContent = "Analyzing...";
+        loadingSpinner.classList.remove("hidden");
+        submitButton.disabled = true;
+        errorMessage.textContent = "";
+
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+          data[key] =
+            isNaN(Number(value)) || value === "" ? value : Number(value);
+        });
+
+        try {
+          const response = await fetch("{{ url_for('predict') }}", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              errorData.error || `HTTP error! status: ${response.status}`
+            );
+          }
+
+          const result = await response.json();
+          const persona = result.prediction;
+
+          predictionResult.textContent = persona;
+          if (personaDetails[persona]) {
+            predictionIcon.textContent = personaDetails[persona].icon;
+            predictionDescription.textContent =
+              personaDetails[persona].description;
+          } else {
+            predictionIcon.textContent = "👤";
+            predictionDescription.textContent =
+              "This customer fits a unique profile.";
+          }
+
+          resultCard.classList.remove("result-card-hidden");
+        } catch (error) {
+          console.error("Error:", error);
+          errorMessage.textContent = `Prediction failed. Please ensure the backend is running.`;
+          resultCard.classList.add("result-card-hidden");
+        } finally {
+          buttonText.textContent = "Predict Persona";
+          loadingSpinner.classList.add("hidden");
+          submitButton.disabled = false;
+        }
+      });
+    }
+  });
+</script>
+{% endblock %}

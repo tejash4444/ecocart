@@ -1,0 +1,82 @@
+{% extends "layout.html" %} {% block title %}Leaderboard | EcoCart{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="leaderboard-container">
+    <div class="leaderboard-header">
+      <h1 class="leaderboard-title">
+        <i class="fas fa-trophy"></i>
+        Sustainability Leaderboard
+      </h1>
+      <div class="leaderboard-tabs">
+        <div class="leaderboard-tab active">Global</div>
+        <div class="leaderboard-tab">Friends</div>
+        <div class="leaderboard-tab">Monthly</div>
+      </div>
+    </div>
+
+    <table class="leaderboard-table">
+      <thead>
+        <tr>
+          <th style="width: 60px">Rank</th>
+          <th>User</th>
+          <th style="text-align: right">Eco Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="rank-1">
+          <td class="leaderboard-rank">1</td>
+          <td>
+            <div class="leaderboard-user">
+              <div class="leaderboard-avatar">AJ</div>
+              <div class="user-info">
+                <span class="user-name">Akshat Jain</span>
+                <span class="user-title">Eco Champion</span>
+              </div>
+            </div>
+          </td>
+          <td class="leaderboard-score eco-points">12,450</td>
+        </tr>
+        <tr class="rank-2">
+          <td class="leaderboard-rank">2</td>
+          <td>
+            <div class="leaderboard-user">
+              <div class="leaderboard-avatar">BP</div>
+              <div class="user-info">
+                <span class="user-name">Bhavesh Patel</span>
+                <span class="user-title">Green Warrior</span>
+              </div>
+            </div>
+          </td>
+          <td class="leaderboard-score eco-points">11,890</td>
+        </tr>
+        <tr class="rank-3">
+          <td class="leaderboard-rank">3</td>
+          <td>
+            <div class="leaderboard-user">
+              <div class="leaderboard-avatar">CR</div>
+              <div class="user-info">
+                <span class="user-name">Chaitanya Rao</span>
+                <span class="user-title">Eco Ambassador</span>
+              </div>
+            </div>
+          </td>
+          <td class="leaderboard-score eco-points">10,765</td>
+        </tr>
+        <tr>
+          <td class="leaderboard-rank">4</td>
+          <td>
+            <div class="leaderboard-user">
+              <div class="leaderboard-avatar">DS</div>
+              <div class="user-info">
+                <span class="user-name">Darsh Shah</span>
+                <span class="user-title">Eco Explorer</span>
+              </div>
+            </div>
+          </td>
+          <td class="leaderboard-score eco-points">9,430</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

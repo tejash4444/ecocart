@@ -1,0 +1,105 @@
+{% extends "layout.html" %} {% block title %}Dashboard | EcoCart Global
+Expansion{% endblock %} {% block content %}
+<section class="hero">
+  <h1>EcoCart Global Expansion</h1>
+  <p>
+    Targeted strategies using AI-powered customer segmentation to scale globally
+    and maximize engagement.
+  </p>
+  <div>
+    <a href="{{ url_for('contact_page') }}" class="btn">Get In Touch</a>
+    <a href="#insights" class="btn btn-secondary">View Insights</a>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <h2 class="section-title">About Us</h2>
+  <p>
+    EcoCart Solutions is a Singapore-based e-commerce company leveraging
+    AI-driven segmentation to enhance customer experience across global markets.
+    Our proprietary algorithms analyze customer behavior to create targeted
+    marketing strategies that drive engagement and conversion.
+  </p>
+</section>
+
+<section class="section" id="personas">
+  <h2 class="section-title">Customer Personas</h2>
+  <div class="grid">
+    <!-- Akshat Card -->
+    <div class="card animate-on-scroll">
+      <div class="card-header">
+        <h3>Akshat</h3>
+        <span class="persona-badge">Tech Enthusiast</span>
+      </div>
+      <p>
+        Tech-savvy youth responsive to app-based offers and social media
+        campaigns.
+      </p>
+      <div class="graph-container">
+        <canvas id="akshatChart"></canvas>
+      </div>
+    </div>
+    <!-- Bhavesh Card -->
+    <div class="card animate-on-scroll">
+      <div class="card-header">
+        <h3>Bhavesh</h3>
+        <span class="persona-badge">Value Seeker</span>
+      </div>
+      <p>
+        Price-sensitive shopper who seeks discounts and cashback opportunities.
+      </p>
+      <div class="graph-container">
+        <canvas id="bhaveshChart"></canvas>
+      </div>
+    </div>
+    <!-- Chaitanya Card -->
+    <div class="card animate-on-scroll">
+      <div class="card-header">
+        <h3>Chaitanya</h3>
+        <span class="persona-badge">Eco Warrior</span>
+      </div>
+      <p>
+        Environmentally conscious buyers supporting sustainable and green
+        brands.
+      </p>
+      <div class="graph-container">
+        <canvas id="chaitanyaChart"></canvas>
+      </div>
+    </div>
+    <!-- Darsh Card -->
+    <div class="card animate-on-scroll">
+      <div class="card-header">
+        <h3>Darsh</h3>
+        <span class="persona-badge">Premium Buyer</span>
+      </div>
+      <p>
+        Premium urban buyer preferring exclusive experiences and luxury
+        products.
+      </p>
+      <div class="graph-container">
+        <canvas id="darshChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="insights">
+  <h2 class="section-title">Market Insights</h2>
+  <div class="grid">
+    <div class="card animate-on-scroll">
+      <h3>Conversion Boost</h3>
+      <p>Personalized segmentation increased conversions by 32% in Q2 2023.</p>
+      <div class="graph-container">
+        <canvas id="conversionChart"></canvas>
+      </div>
+    </div>
+    <div class="card animate-on-scroll">
+      <h3>Customer Loyalty</h3>
+      <p>Segment-specific campaigns improved repeat purchase rate by 45%.</p>
+      <div class="graph-container">
+        <canvas id="loyaltyChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
